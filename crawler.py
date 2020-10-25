@@ -67,6 +67,7 @@ for a in All:
     for v in vlist:
         append(v['bvid'], v['author'], v['title'], hot)
 
+# 简单去重
 new = set(new)
 todo = set(todo)
 
