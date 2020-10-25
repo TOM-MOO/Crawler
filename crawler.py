@@ -37,14 +37,10 @@ def write(todo_file, new_file):
             f.writelines(todo)
         with open(new_file, 'w', encoding='utf-8') as f:
             f.writelines(new)
-    # 清除前一条爬虫残留数据
-    todo.clear()
-    new.clear()
 
 
 ups = read(db_path % 'ups')
-pop = read(db_path % 'pop')
-rank = read(db_path % 'rank')
+hot = read(db_path % 'hot')
 
 with open(db_path % 'uid', 'r', encoding='utf-8') as u:
     for uid in u:
@@ -55,19 +51,23 @@ with open(db_path % 'uid', 'r', encoding='utf-8') as u:
             append(v['bvid'], v['author'], v['title'], ups)
 
 write(wp_path % ('UPS_%d.html' % int(time.time())), db_path % 'ups')
+# 清除前一条爬虫残留数据
+todo.clear()
+new.clear()
 
 for i in range(0, 12):  # 不止10页???与网页不同???
     r = requests.get(pop_url % (i + 1))
     vlist = r.json()['data']['list']
     for v in vlist:
-        append(v['bvid'], v['owner']['name'], v['title'], pop)
-
-write(wp_path % ('POP_%d.html' % int(time.time())), db_path % 'pop')
+        append(v['bvid'], v['owner']['name'], v['title'], hot)
 
 for a in All:
     r = requests.get(rank_url % a)
     vlist = r.json()['data']['list']
     for v in vlist:
-        append(v['bvid'], v['author'], v['title'], rank)
+        append(v['bvid'], v['author'], v['title'], hot)
 
-write(wp_path % ('RANK_%d.html' % int(time.time())), db_path % 'rank')
+new = set(new)
+todo = set(todo)
+
+write(wp_path % ('HOT_%d.html' % int(time.time())), db_path % 'hot')
