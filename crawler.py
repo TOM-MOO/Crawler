@@ -73,5 +73,6 @@ todo = set(todo)
 
 write(wp_path % ('HOT_%d.html' % int(time.time())), db_path % 'hot')
 
-with open(wp_path % ('WEIBO_%d.html' % int(time.time())), 'w', encoding='utf-8') as t:
-    t.writelines('<a href="https://s.weibo.com/top/summary">WEIBO</a>\n')
+with open(wp_path % ('TOP_%d.html' % int(time.time())), 'w', encoding='utf-8') as t:
+    t.writelines('<a href="https://s.weibo.com/top/summary">WEIBO</a>\n<br>\n'
+                 '<a href="https://www.zhihu.com/hot?list=digital">ZHIHU</a>\n')
